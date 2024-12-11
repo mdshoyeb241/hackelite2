@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bulbs and Fans with Switches</title>
+
+  <!-- Link for Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Link for Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Apply Poppins font globally */
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #222;
+    }
+
+    /* Title styles */
+    .company-name {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .company-name i {
+      margin-right: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      gap: 200px; /* Spacing between bulb and fan groups */
+      margin-bottom: 50px;
+    }
+
+    .bulb-container, .fan-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Title Styles */
+    .title {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* Bulb Styles */
+    .bulb {
+      position: relative;
+      width: 100px; /* Updated to match fan size */
+      height: 100px; /* Updated to match fan size */
+      background: #444; /* Default off-state background */
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .bulb:before {
+      content: "";
+      position: absolute;
+      left: 32.5px;
+      top: -50px;
+      width: 35px;
+      height: 80px;
+      background: #444;
+      border-top: 30px solid #000;
+      border-radius: 10px;
+    }
+
+    .bulb.on {
+      background: #fff; /* Fully white when on */
+      box-shadow: 0 0 50px #fff, 0 0 100px #fff, 0 0 150px #fff;
+    }
+
+    .bulb.on:before {
+      background: #fff;
+      border-top: 30px solid #fff;
+    }
+
+    /* Fan Styles */
+    .fan {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #444;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .fan .blade {
+      position: absolute;
+      width: 10px;
+      height: 40px;
+      background: #666;
+      border-radius: 5px;
+    }
+
+    .fan .blade:nth-child(1) {
+      transform: rotate(0deg) translateY(-20px);
+    }
+
+    .fan .blade:nth-child(2) {
+      transform: rotate(120deg) translateY(-20px);
+    }
+
+    .fan .blade:nth-child(3) {
+      transform: rotate(240deg) translateY(-20px);
+    }
+
+    .fan.on {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Switch Styles */
+    .switch {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(#eee, #ccc, #eee);
+      border: 3px solid #000;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: gray 0px 20px 30px -10px;
+    }
+
+    .switch .btn {
+      position: relative;
+      width: 25px;
+      height: 40px;
+      background: linear-gradient(#777, #fff, #777);
+      border-radius: 6px;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+
+    .switch .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 85%;
+      background: linear-gradient(#fff, #fff);
+      border-radius: 4px;
+    }
+
+    .on .switch .btn::before {
+      top: 15%;
+    }
+
+    .controls {
+      display: flex;
+      gap: 50px;
+      margin-top: 20px;
+    }
+
+    /* Updated Navbar Styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0e1a1f; /* Dark blue background */
+      padding: 1rem 3rem; /* More padding for balance */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .navbar .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #dce7d6; /* Light pastel green */
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar ul li {
+      display: inline;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: #dce7d6; /* Light pastel green */
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .navbar ul li a:hover {
+      color: #598392; /* Sky blue hover color */
+    }
+
+    main {
+      margin-top: 80px; /* Avoid content overlapping the navbar */
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar section -->
+  <header class="navbar">
+    <div class="brand">
+      <i class="fa-solid fa-dice-d6"></i>EnergAI
+    </div>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+  </header>
+
+  <!-- Company Name -->
+  <div class="company-name">
+    <i class="fa-solid fa-dice-d6"></i>EnergAI
+  </div>
+
+  <div class="container">
+    <!-- Bulb 1 -->
+    <div class="bulb-container">
+      <div class="title">Bulb 1</div>
+      <div class="bulb" id="bulb1"></div>
+      <div class="switch">
+        <div class="btn" id="switch1"></div>
+      </div>
+    </div>
+    <!-- Fan 1 -->
+    <div class="fan-container">
+      <div class="title">Fan 1</div>
+      <div class="fan" id="fan1">
+        <div class="blade"></div>
+        <div class="blade"></div>
+        <div class="blade"></div>
+      </div>
+      <div class="switch">
+        <div class="btn" id="switchFan1"></div>
+      </div>
+    </div>
+
+    <!-- Bulb 2 -->
+    <div class="bulb-container">
+      <div class="title">Bulb 2</div>
+      <div class="bulb" id="bulb2"></div>
+      <div class="switch">
+        <div class="btn" id="switch2"></div>
+      </div>
+    </div>
+    <!-- Fan 2 -->
+    <div class="fan-container">
+      <div class="title">Fan 2</div>
+      <div class="fan" id="fan2">
+        <div class="blade"></div>
+        <div class="blade"></div>
+        <div class="blade"></div>
+      </div>
+      <div class="switch">
+        <div class="btn" id="switchFan2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bulb1 = document.getElementById("bulb1");
+    const bulb2 = document.getElementById("bulb2");
+    const fan1 = document.getElementById("fan1");
+    const fan2 = document.getElementById("fan2");
+    const switch1 = document.getElementById("switch1");
+    const switch2 = document.getElementById("switch2");
+    const switchFan1 = document.getElementById("switchFan1");
+    const switchFan2 = document.getElementById("switchFan2");
+
+    // Toggle Bulb 1
+    switch1.addEventListener("click", () => {
+      bulb1.classList.toggle("on");
+    });
+
+    // Toggle Bulb 2
+    switch2.addEventListener("click", () => {
+      bulb2.classList.toggle("on");
+    });
+
+    // Toggle Fan 1
+    switchFan1.addEventListener("click", () => {
+      fan1.classList.toggle("on");
+    });
+
+    // Toggle Fan 2
+    switchFan2.addEventListener("click", () => {
+      fan2.classList.toggle("on");
+    });
+  </script>
+</body>
+</html>

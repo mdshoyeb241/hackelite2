@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-dark-blue: #01161e;
+            --primary-sky-blue: #598392;
+            --hover-dark-blue: #124559;
+            --light-pastel-green: #eff6e0;
+            --pastel-green: #aec3b0;
+            --table-header-green: #008766; /* Updated header color */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-dark-blue);
+            color: var(--light-pastel-green);
+        }
+
+        table {
+            width: 90%;
+            margin: 74px;
+            border-collapse: collapse;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: #ffffff; /* White table background */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid var(--hover-dark-blue);
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: var(--table-header-green);
+            color: #ffffff; /* White text for header */
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background: var(--primary-sky-blue);
+        }
+
+        tr:nth-child(odd) {
+            background: var(--primary-sky-blue);
+        }
+
+        tr:hover {
+            background: var(--hover-dark-blue);
+            color: var(--light-pastel-green);
+            cursor: pointer;
+        }
+
+        .table-title {
+            font-size: 2rem;
+            margin-top: 100px;
+            margin-bottom: 20px;
+            color: #ffffff; /* White title text */
+            text-align: center;
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        tbody td {
+            font-weight: 500;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary-dark-blue);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light-pastel-green);
+        }
+
+        .navbar .brand img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            margin-right:50px;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: var(--light-pastel-green);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: var(--primary-sky-blue);
+        }
+
+        main {
+            margin-top: 80px; /* Ensures content does not overlap with navbar */
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="brand">
+          <i class="fa-solid fa-dice-d6"></i>EnergAI <!-- Replace with your image -->
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <video class="background-video" autoplay loop muted>
+        <source src="68.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <main>
+        <div class="table-title">Energy Monitoring Dashboard</div>
+        <table id="dynamicTable">
+            <thead>
+                <tr>
+                    <th>Light 1 Current</th>
+                    <th>Light 2 Current</th>
+                    <th>Fan Current</th>
+                    <th>Temperature</th>
+                    <th>Human Presence</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be inserted dynamically -->
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        const tableBody = document.querySelector('#dynamicTable tbody');
+
+        // Simulating data coming from a backend server
+        fetch('https://example.com/api/data') // Replace with actual backend URL
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((rowData, index) => {
+                    const row = document.createElement('tr');
+
+                    for (let key in rowData) {
+                        const cell = document.createElement('td');
+                        cell.textContent = rowData[key];
+                        row.appendChild(cell);
+                    }
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </scrip>
+</body>
+
+</html>
