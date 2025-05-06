@@ -1,0 +1,137 @@
+set ns [new Simulator
+
+set na [open Lab4 nam w $ns namtrace-all-wireless Sna 500 500
+
+set nt [open Lab4.tr w
+
+$ns trace-all $nt
+
+set topo [new Topography] Stopo load flatgrid 500 500
+
+$ns node-config-adhocRouting DSDV $ns node-config-IlType LL
+
+Ins node-config-macType
+
+Mac/802 11
+
+Sns node-config-ifqType
+
+Queue/Drop Tail
+
+$ns node-config-ifqLen 50
+
+$ns node-config -phy Type
+
+Phy/Wireless Phy
+
+$ns node-config-channelType.
+
+Channel/WirelessChannel
+
+$ns node-config-propType Propagation/TwoRayGround
+
+$ns node-config-antType Antenna/Omni Antenna
+
+Sns node-config-topoinstance Stapa Ins node-config-agentTrace ON
+
+$ns node-config-router Trace ON
+
+create-god 4
+
+set no [$ns node] set n.1 [Sns node]
+
+set n2 ($ne node]
+
+set n1 [Sns node] set n2 [Sns node)
+
+set n.3 (Sins [Sns node]
+
+$no set X 250.0
+
+$n0 set Y 250.0
+
+$no set 2 0.0
+
+$n1 set X 200.0 3nt set Y 250.0
+
+$n1 set Z 0.0
+
+312 set X 250.0
+
+3n2 set Y 250.0 3n2 set Z 0.0
+
+$n3 set X 250.0
+
+3n3 set Y 250.0 $n3 set 2 0.0
+
+$ns at 0.0 "$n setdest 400.0 300.0
+
+50.0" Sns at 0.0 "Sn1 setdest 50.0 100.0
+
+20.0" $ns at 0.0 "5n2 seldest 75.0 180.0 5.0
+
+$ns at 0.0 "Sn3 seldest 100.0 100.0
+
+25.0
+
+set tcp1 [new Agent/TCP) $ns attach-agent Sno Step1
+
+set tcp2 [new Agent/TCP]
+
+Ins attach-agent 5n2 Stcp2
+
+set sink1 [new Agent/TCPSink)
+
+$ns attach-agent Sn1 Ssink1
+
+set sink2 (new Agent/TCPSink) $ns attach agent Sn3 $sink2
+
+set cbr1 [new Application/Traffic/CBR)
+
+Scort attach-agent Stop1
+
+set cbr2 (new Application/Traffic/CBR]
+
+Scbr2 attach-agent Stcp2
+
+$ns connect Stopt sinkt
+
+set cbr1 [new Application/Traffic/CBR]
+
+$cort attach-agent Step1
+
+set cbr2 [new Application/Traffic/CBR) $cbr2 attach-agent Stop2
+
+$ns connect Stcp1 $sink1 $ns connect Stcp2 $sink2
+
+proc End
+
+global ns int na
+
+Ins flush-trace
+
+close Sna close Snt
+
+exec nam Lab4.nam &
+
+}
+
+Sns at 0.0 "Scbrt start
+
+$ns at 0.0 "Scbr2 start
+
+$ns at 10.0 "End"
+
+$ns run
+
+AWK Code
+
+BEGIN(Num_of_pkis-0)
+
+f($1&& $31 && $4 "AGT && $7== "top")
+
+Num_of_pkts Num_of pkis $8
+
+END Throughput Num of pkts 8/32
+
+printf("\n\n\tThroughput = %fbpms/n\n\n", Throughput); )
