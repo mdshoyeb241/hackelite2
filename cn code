@@ -1,4 +1,4 @@
-set ns [new Simulator
+set ns [new Simulator]
 
 set na [open Lab4 nam w $ns namtrace-all-wireless Sna 500 500
 
